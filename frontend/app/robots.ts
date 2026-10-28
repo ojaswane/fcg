@@ -1,0 +1,14 @@
+import type { MetadataRoute } from "next";
+
+export default function robots(): MetadataRoute.Robots {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
+    ? new URL(process.env.NEXT_PUBLIC_SITE_URL).origin
+    : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : undefined;
+
+  return {
+    rules: { userAgent: "*", allow: "/" },
+    ...(baseUrl ? { sitemap: `${baseUrl}/sitemap.xml` } : {}),
+  };
+}
